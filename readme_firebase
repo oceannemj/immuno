@@ -1,0 +1,76 @@
+                                     ImmunoWarriors - Firebase Integration
+
+                                              Configuration Firebase
+
+
+ 1. Configuration de base
+
+Ajoutez ces variables d'environnement dans votre fichier `.env.local` a la racine du projet (au même niveau que package.json)
+
+
+VUE_APP_FIREBASE_API_KEY="AIzaSyBYvHgUYBEaeuKNbzhtGrM2QrOohWTeJUs"
+VUE_APP_FIREBASE_AUTH_DOMAIN="immunowarriors.firebaseapp.com"
+VUE_APP_FIREBASE_PROJECT_ID="immunoWarriors"
+VUE_APP_FIREBASE_STORAGE_BUCKET="immunoWarriors.appspot.com"
+VUE_APP_FIREBASE_MESSAGING_SENDER_ID=" "
+VUE_APP_FIREBASE_APP_ID="immunowarriors-a3ba"
+
+
+
+2. Collections principales: 
+
+users/{userId} → Données joueurs
+  ├── defenses/ → Défenses actives/passives
+  └── simulationCombat/ → Historique des combats
+pathogene/ → Pathogènes globaux
+recherche/ → Arbre de recherche
+
+
+3. Règles de sécurité Firestore
+
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Accès public en lecture seule pour les collections globales
+    match /research/{document} {
+      allow read: if true;
+      allow write: if request.auth.token.isAdmin == true;
+    }
+    
+    match /pathogens/{document} {
+      allow read: if true;
+      allow write: if request.auth.token.isAdmin == true;
+    }
+
+    // Données utilisateur (protégées)
+    match /users/{userId} {
+      allow read, update: if request.auth != null && request.auth.uid == userId;
+      
+      // Sous-collections
+      match /defenses/{document} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      match /combatSimulations/{document} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+  }
+}
+
+
+  4. Déploiement Firebase
+
+
+ ///Installer Firebase CLI
+npm install -g firebase-tools
+firebase login
+
+
+///Déployer les règles Firestore
+firebase deploy --only firestore:rules
+
+
+///Déployer l'application
+firebase deploy
