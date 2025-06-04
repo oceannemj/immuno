@@ -10,10 +10,10 @@ Ajoutez ces variables d'environnement dans votre fichier `.env.local` a la racin
 
 VUE_APP_FIREBASE_API_KEY="AIzaSyBYvHgUYBEaeuKNbzhtGrM2QrOohWTeJUs"
 VUE_APP_FIREBASE_AUTH_DOMAIN="immunowarriors.firebaseapp.com"
-VUE_APP_FIREBASE_PROJECT_ID="immunoWarriors"
-VUE_APP_FIREBASE_STORAGE_BUCKET="immunoWarriors.appspot.com"
+VUE_APP_FIREBASE_PROJECT_ID="immunoWarriors-a3ba"
+VUE_APP_FIREBASE_STORAGE_BUCKET="immunoWarriors-a3ba.appspot.com"
 VUE_APP_FIREBASE_MESSAGING_SENDER_ID=" "
-VUE_APP_FIREBASE_APP_ID="immunowarriors-a3ba"
+VUE_APP_FIREBASE_APP_ID="immunowarriors"
 
 
 
